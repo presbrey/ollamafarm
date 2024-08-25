@@ -1,3 +1,9 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/presbrey/ollamafarm)](https://goreportcard.com/report/github.com/presbrey/ollamafarm)
+[![codecov](https://codecov.io/gh/presbrey/ollamafarm/branch/main/graph/badge.svg)](https://codecov.io/gh/presbrey/ollamafarm)
+![Go Test](https://github.com/presbrey/ollamafarm/workflows/Go%20Test/badge.svg)
+[![GoDoc](https://godoc.org/github.com/presbrey/ollamafarm?status.svg)](https://godoc.org/github.com/presbrey/ollamafarm)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # OllamaFarm
 
 OllamaFarm is a Go package that manages multiple Ollama instances, providing a convenient way to interact with a farm of Ollama servers. It offers features like automatic offline detection and failover, model availability tracking, and server selection based on criteria such as model.
