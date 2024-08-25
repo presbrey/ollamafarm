@@ -18,8 +18,12 @@ Here's an example of how to use OllamaFarm with multiple Ollamas in the same gro
 package main
 
 import (
+    "context"
     "fmt"
+    "log"
+
     "github.com/presbrey/ollamafarm"
+    "github.com/ollama/ollama/api"
 )
 
 func main() {
@@ -31,9 +35,24 @@ func main() {
     farm.RegisterURL("http://ollama3:11434", &ollamafarm.Properties{Group: "3090", Priority: 1})
 
     // Select an Ollama instance
-    ollama := farm.First(&ollamafarm.Where{Group: "4090"})
+    ollama := farm.First(&ollamafarm.Where{Model: "llama3.1:8b-instruct-fp16"})
     if ollama != nil {
-        fmt.Printf("Selected Ollama from group: %s, Priority: %d\n", ollama.Group(), ollama.Priority())
+        // Perform a Chat call
+        req := &api.ChatRequest{
+            Model: "llama3.1:8b-instruct-fp16",
+            Messages: []api.Message{
+                {Role: "user", Content: "How many letter R are in the word Strawberry?"},
+            },
+        }
+
+        err := ollama.Client().Chat(context.Background(), req, func(resp api.ChatResponse) error {
+            fmt.Print(resp.Message.Content)
+            return nil
+        })
+
+        if err != nil {
+            log.Fatalf("Chat error: %v", err)
+        }
     }
 
     // Get model counts
