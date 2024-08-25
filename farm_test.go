@@ -195,4 +195,11 @@ func TestFarmMethods(t *testing.T) {
 			t.Errorf("Expected 2 llamas, got %d", len(llamas))
 		}
 	})
+
+	t.Run("TestOllamaFarm", func(t *testing.T) {
+		llama := farm.First(&ollamafarm.Where{Group: "group1"})
+		if llama.Farm() != farm {
+			t.Error("Expected farm, got nil")
+		}
+	})
 }
