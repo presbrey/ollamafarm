@@ -12,7 +12,7 @@ go get github.com/presbrey/ollamafarm
 
 ## Usage
 
-Here's a basic example of how to use OllamaFarm:
+Here's an example of how to use OllamaFarm with multiple Ollamas in the same group and different priorities:
 
 ```go
 package main
@@ -25,14 +25,15 @@ import (
 func main() {
     farm := ollamafarm.New()
 
-    // Register Ollama servers
+    // Register Ollama servers in the same group with different priorities
     farm.RegisterURL("http://ollama1:11434", &ollamafarm.Properties{Group: "group1", Priority: 1})
-    farm.RegisterURL("http://ollama2:11434", &ollamafarm.Properties{Group: "group2", Priority: 2})
+    farm.RegisterURL("http://ollama2:11434", &ollamafarm.Properties{Group: "group1", Priority: 2})
+    farm.RegisterURL("http://ollama3:11434", &ollamafarm.Properties{Group: "group1", Priority: 3})
 
     // Select an Ollama instance
     ollama := farm.First(&ollamafarm.Where{Group: "group1"})
     if ollama != nil {
-        fmt.Printf("Selected Ollama from group: %s\n", ollama.Group())
+        fmt.Printf("Selected Ollama from group: %s, Priority: %d\n", ollama.Group(), ollama.Priority())
     }
 
     // Get model counts
@@ -41,7 +42,7 @@ func main() {
 }
 ```
 
-## API Reference
+Note: When an Ollama instance goes offline, OllamaFarm automatically selects the next online Ollama with the highest priority (lowest priority number) within the same group. This ensures continuous operation and optimal resource utilization without manual intervention.
 
 ## API Reference
 
@@ -105,4 +106,4 @@ Contributions to OllamaFarm are welcome! Please note the following guidelines:
 
 ## License
 
-This project is licensed under the [LICENSE](LICENSE.txt) file in the root directory of this repository.
+This project is licensed under the [MIT LICENSE](LICENSE.txt) file in the root directory of this repository.
