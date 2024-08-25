@@ -43,113 +43,56 @@ func main() {
 
 ## API Reference
 
+## API Reference
+
 ### Types
 
-#### Farm
-
-The main struct that manages multiple Ollama instances.
-
-```go
-type Farm struct {
-    // unexported fields
-}
-```
-
-#### Ollama
-
-Represents an individual Ollama server.
-
-```go
-type Ollama struct {
-    // unexported fields
-}
-```
-
-#### Options
-
-Defines the options for a Farm. All fields are optional.
-
-```go
-type Options struct {
-    Client     *http.Client
-    ModelsTTL  time.Duration
-    PingTTL    time.Duration
-}
-```
-
-#### Properties
-
-Defines the properties of an Ollama client. All fields are optional.
-
-```go
-type Properties struct {
-    Group    string
-    Offline  bool
-    Priority int
-}
-```
-
-#### Where
-
-Defines the selection criteria for Ollama clients.
-
-```go
-type Where struct {
-    Group   string
-    Model   string
-    Offline bool
-}
-```
+* `Farm`: The main struct that manages multiple Ollama instances.
+* `Ollama`: Represents an individual Ollama server.
+* `Options`: Defines the options for a Farm. All fields are optional.
+  ```go
+  type Options struct {
+      Client     *http.Client
+      ModelsTTL  time.Duration
+      PingTTL    time.Duration
+  }
+  ```
+* `Properties`: Defines the properties of an Ollama client. All fields are optional.
+  ```go
+  type Properties struct {
+      Group    string
+      Offline  bool
+      Priority int
+  }
+  ```
+* `Where`: Defines the selection criteria for Ollama clients.
+  ```go
+  type Where struct {
+      Group   string
+      Model   string
+      Offline bool
+  }
+  ```
 
 ### Functions
 
-#### New() *Farm
-
-Creates a new Farm instance with default options.
-
-#### NewWithOptions(options *Options) *Farm
-
-Creates a new Farm instance with the given options.
+* `New() *Farm`: Creates a new Farm instance with default options.
+* `NewWithOptions(options *Options) *Farm`: Creates a new Farm instance with the given options.
 
 ### Farm Methods
 
-#### RegisterClient(id string, client *api.Client, properties *Properties)
-
-Adds a new Ollama to the Farm if it doesn't already exist.
-
-#### RegisterURL(baseURL string, properties *Properties) error
-
-Adds a new Ollama to the Farm using the baseURL as the ID.
-
-#### First(where *Where) *Ollama
-
-Returns the first Ollama that matches the given criteria.
-
-#### Select(where *Where) []*Ollama
-
-Returns a list of Ollamas that match the given criteria, sorted by ascending Priority.
-
-#### ModelCounts(where *Where) map[string]uint
-
-Returns a count of all models available across all registered Ollamas.
+* `RegisterClient(id string, client *api.Client, properties *Properties)`: Adds a new Ollama to the Farm if it doesn't already exist.
+* `RegisterURL(baseURL string, properties *Properties) error`: Adds a new Ollama to the Farm using the baseURL as the ID.
+* `First(where *Where) *Ollama`: Returns the first Ollama that matches the given criteria.
+* `Select(where *Where) []*Ollama`: Returns a list of Ollamas that match the given criteria, sorted by ascending Priority.
+* `ModelCounts(where *Where) map[string]uint`: Returns a count of all models available across all registered Ollamas.
 
 ### Ollama Methods
 
-#### Client() *api.Client
-
-Returns the Ollama client.
-
-#### Group() string
-
-Returns the Ollama's group.
-
-#### Online() bool
-
-Returns whether the Ollama is online.
-
-#### Priority() int
-
-Returns the Ollama's priority.
+* `Client() *api.Client`: Returns the Ollama client.
+* `Group() string`: Returns the Ollama's group.
+* `Online() bool`: Returns whether the Ollama is online.
+* `Priority() int`: Returns the Ollama's priority.
 
 ## Contributing
 
