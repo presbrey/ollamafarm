@@ -55,7 +55,7 @@ func (ollama *Ollama) updateModels() {
 
 func (ollama *Ollama) updateOnline() {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	_, err := ollama.client.Version(ctx)
+	err := ollama.client.Heartbeat(ctx)
 	cancel()
 
 	ollama.farm.mu.Lock()
@@ -66,8 +66,8 @@ func (ollama *Ollama) updateOnline() {
 // updateOllama fetches and updates the model list and checks the client's status.
 func (ollama *Ollama) updateTickers() {
 	ollama.farm.mu.Lock()
+	heartbeatTicker := time.NewTicker(ollama.farm.options.Heartbeat)
 	modelTicker := time.NewTicker(ollama.farm.options.ModelsTTL)
-	versionTicker := time.NewTicker(ollama.farm.options.PingTTL)
 	ollama.farm.mu.Unlock()
 
 	ollama.updateModels()
@@ -75,11 +75,10 @@ func (ollama *Ollama) updateTickers() {
 
 	for {
 		select {
+		case <-heartbeatTicker.C:
+			ollama.updateOnline()
 		case <-modelTicker.C:
 			ollama.updateModels()
-
-		case <-versionTicker.C:
-			ollama.updateOnline()
 		}
 	}
 }

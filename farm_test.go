@@ -38,6 +38,8 @@ func setupTestServers() []*httptest.Server {
 			} else if r.URL.Path == "/api/version" {
 				w.WriteHeader(http.StatusOK)
 				w.Write([]byte(`{"version":"0.3.6"}`))
+			} else if r.URL.Path == "/" {
+				w.WriteHeader(http.StatusOK)
 			} else {
 				w.WriteHeader(http.StatusNotFound)
 			}
@@ -56,7 +58,7 @@ func TestFarmMethods(t *testing.T) {
 	}()
 
 	farm := ollamafarm.New()
-	farm2 := ollamafarm.NewWithOptions(&ollamafarm.Options{nil, time.Second, time.Second})
+	farm2 := ollamafarm.NewWithOptions(&ollamafarm.Options{Heartbeat: time.Second, ModelsTTL: time.Second})
 
 	// Register clients
 	for i, server := range servers {

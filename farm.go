@@ -20,11 +20,11 @@ func NewWithOptions(options *Options) *Farm {
 	if options.Client == nil {
 		options.Client = http.DefaultClient
 	}
+	if options.Heartbeat == 0 {
+		options.Heartbeat = 5 * time.Second
+	}
 	if options.ModelsTTL == 0 {
 		options.ModelsTTL = 30 * time.Second
-	}
-	if options.PingTTL == 0 {
-		options.PingTTL = 5 * time.Second
 	}
 	return &Farm{
 		ollamas: make(map[string]*Ollama),

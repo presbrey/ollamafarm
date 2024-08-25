@@ -73,8 +73,8 @@ Note: When an Ollama instance goes offline, OllamaFarm automatically selects the
   ```go
   type Options struct {
       Client     *http.Client
+      Heartbeat  time.Duration
       ModelsTTL  time.Duration
-      PingTTL    time.Duration
   }
   ```
 * `Properties`: Defines the properties of an Ollama client. All fields are optional.

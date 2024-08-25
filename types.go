@@ -28,10 +28,10 @@ type Ollama struct {
 type Options struct {
 	// Client is the HTTP client used to make requests.
 	Client *http.Client
+	// Heartbeat is the time-to-live for online/offline detection. Default: 5 seconds
+	Heartbeat time.Duration
 	// ModelsTTL is the time-to-live for the models cache. Default: 30 seconds
 	ModelsTTL time.Duration
-	// PingTTL is the time-to-live for the online/offline ping. Default: 5 seconds
-	PingTTL time.Duration
 }
 
 // Properties defines the properties of an Ollama client.
