@@ -1,6 +1,6 @@
 # OllamaFarm
 
-OllamaFarm is a Go package that manages multiple Ollama instances, providing a convenient way to interact with a farm of Ollama servers. It offers features like client registration, server selection based on criteria, and model availability tracking.
+OllamaFarm is a Go package that manages multiple Ollama instances, providing a convenient way to interact with a farm of Ollama servers. It offers features like automatic offline detection and failover, model availability tracking, and server selection based on criteria such as model.
 
 ## Installation
 
@@ -26,12 +26,12 @@ func main() {
     farm := ollamafarm.New()
 
     // Register Ollama servers in the same group with different priorities
-    farm.RegisterURL("http://ollama1:11434", &ollamafarm.Properties{Group: "group1", Priority: 1})
-    farm.RegisterURL("http://ollama2:11434", &ollamafarm.Properties{Group: "group1", Priority: 2})
-    farm.RegisterURL("http://ollama3:11434", &ollamafarm.Properties{Group: "group1", Priority: 3})
+    farm.RegisterURL("http://ollama1:11434", &ollamafarm.Properties{Group: "4090", Priority: 1})
+    farm.RegisterURL("http://ollama2:11434", &ollamafarm.Properties{Group: "4090", Priority: 2})
+    farm.RegisterURL("http://ollama3:11434", &ollamafarm.Properties{Group: "3090", Priority: 1})
 
     // Select an Ollama instance
-    ollama := farm.First(&ollamafarm.Where{Group: "group1"})
+    ollama := farm.First(&ollamafarm.Where{Group: "4090"})
     if ollama != nil {
         fmt.Printf("Selected Ollama from group: %s, Priority: %d\n", ollama.Group(), ollama.Priority())
     }
