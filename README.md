@@ -116,6 +116,7 @@ Note: When an Ollama instance goes offline, OllamaFarm automatically selects the
 ### Ollama Methods
 
 * `Client() *api.Client`: Returns the Ollama client.
+* `Farm() *Farm`: Returns the Farm that this Ollama belongs to.
 * `Group() string`: Returns the Ollama's group.
 * `Online() bool`: Returns whether the Ollama is online.
 * `Priority() int`: Returns the Ollama's priority.

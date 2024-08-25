@@ -14,6 +14,11 @@ func (ollama *Ollama) Client() *api.Client {
 	return ollama.client
 }
 
+// Farm returns the Farm that this Ollama belongs to.
+func (ollama *Ollama) Farm() *Farm {
+	return ollama.farm
+}
+
 // Group returns the Ollama's group.
 func (ollama *Ollama) Group() string {
 	ollama.farm.mu.RLock()
@@ -21,7 +26,7 @@ func (ollama *Ollama) Group() string {
 	return ollama.properties.Group
 }
 
-// Offline returns whether the Ollama is online.
+// Online returns whether the Ollama is online.
 func (ollama *Ollama) Online() bool {
 	ollama.farm.mu.RLock()
 	defer ollama.farm.mu.RUnlock()
