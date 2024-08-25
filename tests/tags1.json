@@ -1,0 +1,123 @@
+{
+    "models": [
+        {
+            "details": {
+                "families": [
+                    "phi3"
+                ],
+                "family": "phi3",
+                "format": "gguf",
+                "parameter_size": "3.8B",
+                "parent_model": "",
+                "quantization_level": "Q8_0"
+            },
+            "digest": "0f600d4bce9b3ea2b985a4516e21c2b1d0f2f28e95d7b23343761094c9143c2f",
+            "model": "phi3.5:3.8b-mini-instruct-q8_0",
+            "modified_at": "2024-08-22T13:44:30.941652997-04:00",
+            "name": "phi3.5:3.8b-mini-instruct-q8_0",
+            "size": 4061224031
+        },
+        {
+            "details": {
+                "families": [
+                    "starcoder2"
+                ],
+                "family": "starcoder2",
+                "format": "gguf",
+                "parameter_size": "3B",
+                "parent_model": "",
+                "quantization_level": "Q4_0"
+            },
+            "digest": "f67ae0f64584a4d1d7c609bf4778dd0d07054582362d21ca4f0eddea22aafd0c",
+            "model": "starcoder2:3b",
+            "modified_at": "2024-08-18T16:41:07.482054679-04:00",
+            "name": "starcoder2:3b",
+            "size": 1709901545
+        },
+        {
+            "details": {
+                "families": [
+                    "nomic-bert"
+                ],
+                "family": "nomic-bert",
+                "format": "gguf",
+                "parameter_size": "137M",
+                "parent_model": "",
+                "quantization_level": "F16"
+            },
+            "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f",
+            "model": "nomic-embed-text:latest",
+            "modified_at": "2024-08-18T16:20:50.38607392-04:00",
+            "name": "nomic-embed-text:latest",
+            "size": 274302450
+        },
+        {
+            "details": {
+                "families": [
+                    "gemma2"
+                ],
+                "family": "gemma2",
+                "format": "gguf",
+                "parameter_size": "27.2B",
+                "parent_model": "",
+                "quantization_level": "Q6_K"
+            },
+            "digest": "c0d8f9013cd069da07696717a0670ee63636429e344c48a8330a807e8db863d5",
+            "model": "gemma2:27b-text-q6_K",
+            "modified_at": "2024-08-03T06:03:51.855814166-04:00",
+            "name": "gemma2:27b-text-q6_K",
+            "size": 22343532709
+        },
+        {
+            "details": {
+                "families": [
+                    "gemma2"
+                ],
+                "family": "gemma2",
+                "format": "gguf",
+                "parameter_size": "27.2B",
+                "parent_model": "",
+                "quantization_level": "Q6_K"
+            },
+            "digest": "42dd7dda6a9b9148699dbf04e1463f3d2bf8024963bd133df0444d04f2bc82cb",
+            "model": "gemma2:27b-instruct-q6_K",
+            "modified_at": "2024-08-03T06:00:04.227294355-04:00",
+            "name": "gemma2:27b-instruct-q6_K",
+            "size": 22343533698
+        },
+        {
+            "details": {
+                "families": [
+                    "llama"
+                ],
+                "family": "llama",
+                "format": "gguf",
+                "parameter_size": "8.0B",
+                "parent_model": "",
+                "quantization_level": "Q6_K"
+            },
+            "digest": "a4251f8abd8e2c307959bb18c8331ee93783a013235b665e39b98abbdeb487bc",
+            "model": "llama3.1:8b-instruct-q6_K",
+            "modified_at": "2024-08-03T04:42:18.973756718-04:00",
+            "name": "llama3.1:8b-instruct-q6_K",
+            "size": 6596021154
+        },
+        {
+            "details": {
+                "families": [
+                    "llama"
+                ],
+                "family": "llama",
+                "format": "gguf",
+                "parameter_size": "12.2B",
+                "parent_model": "",
+                "quantization_level": "Q8_0"
+            },
+            "digest": "550a4a7f593a137eb3e2835551d2db3c1d0124ca53e40cae36f117012e150f1b",
+            "model": "mistral-nemo:12b-instruct-2407-q8_0",
+            "modified_at": "2024-08-03T04:19:31.481189187-04:00",
+            "name": "mistral-nemo:12b-instruct-2407-q8_0",
+            "size": 13022382033
+        }
+    ]
+}
