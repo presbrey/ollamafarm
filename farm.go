@@ -147,3 +147,25 @@ func (f *Farm) ModelCounts(where *Where) map[string]uint {
 
 	return modelCounts
 }
+
+// AllModels returns a list of all unique models available across all registered Ollamas.
+func (f *Farm) AllModels() []string {
+	f.mu.RLock()
+	defer f.mu.RUnlock()
+
+	modelSet := make(map[string]struct{})
+	for _, ollama := range f.ollamas {
+		if !ollama.properties.Offline {
+			for model := range ollama.models {
+				modelSet[model] = struct{}{}
+			}
+		}
+	}
+
+	models := make([]string, 0, len(modelSet))
+	for model := range modelSet {
+		models = append(models, model)
+	}
+
+	return models
+}
