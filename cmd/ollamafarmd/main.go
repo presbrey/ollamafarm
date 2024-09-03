@@ -17,9 +17,6 @@ func main() {
 
 	s := server.NewServer(farm)
 
-	http.HandleFunc("/version", s.VersionHandler)
-	http.HandleFunc("/models", s.ModelsHandler)
-
-	log.Println("Server starting on :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("Server starting on :11343")
+	log.Fatal(http.ListenAndServe(":11434", s))
 }

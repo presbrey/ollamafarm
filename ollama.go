@@ -2,10 +2,18 @@ package ollamafarm
 
 import (
 	"context"
+	"net/url"
 	"time"
 
 	"github.com/ollama/ollama/api"
 )
+
+// BaseURL returns the base URL of the Ollama.
+func (ollama *Ollama) BaseURL() *url.URL {
+	ollama.farm.mu.RLock()
+	defer ollama.farm.mu.RUnlock()
+	return ollama.url
+}
 
 // Client returns the Ollama client.
 func (ollama *Ollama) Client() *api.Client {
@@ -48,11 +56,11 @@ func (ollama *Ollama) updateModels() {
 	ollama.farm.mu.Lock()
 	if err != nil {
 		ollama.properties.Offline = true
-		ollama.models = make(map[string]bool)
+		ollama.models = make(map[string]*api.ListModelResponse)
 	} else {
 		ollama.properties.Offline = false
 		for _, model := range listResponse.Models {
-			ollama.models[model.Name] = true
+			ollama.models[model.Name] = &model
 		}
 	}
 	ollama.farm.mu.Unlock()

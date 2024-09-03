@@ -33,11 +33,11 @@ func NewWithOptions(options *Options) *Farm {
 }
 
 // RegisterClient adds a new Ollama to the Farm if it doesn't already exist.
-func (f *Farm) RegisterClient(id string, client *api.Client, properties *Properties) {
+func (f *Farm) RegisterClient(name string, client *api.Client, properties *Properties) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 
-	if _, exists := f.ollamas[id]; exists {
+	if _, exists := f.ollamas[name]; exists {
 		return
 	}
 
@@ -49,14 +49,59 @@ func (f *Farm) RegisterClient(id string, client *api.Client, properties *Propert
 	}
 
 	ollama := &Ollama{
+		name: name,
+
 		client:     client,
 		farm:       f,
-		models:     make(map[string]bool),
+		models:     make(map[string]*api.ListModelResponse),
 		properties: p,
 	}
-	f.ollamas[id] = ollama
+	f.ollamas[name] = ollama
 
 	go ollama.updateTickers()
+}
+
+// RegisterClient adds a new Ollama to the Farm if it doesn't already exist.
+func (f *Farm) RegisterClientURL(name string, client *api.Client, properties *Properties, url *url.URL) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+
+	if _, exists := f.ollamas[name]; exists {
+		return
+	}
+
+	p := Properties{}
+	if properties != nil {
+		p.Group = properties.Group
+		p.Offline = properties.Offline
+		p.Priority = properties.Priority
+	}
+
+	ollama := &Ollama{
+		name: name,
+		url:  url,
+
+		client:     client,
+		farm:       f,
+		models:     make(map[string]*api.ListModelResponse),
+		properties: p,
+	}
+	f.ollamas[name] = ollama
+
+	go ollama.updateTickers()
+}
+
+// RegisterNamedURL adds a new Ollama to the Farm using the given name as the ID.
+func (f *Farm) RegisterNamedURL(name, baseURL string, properties *Properties) error {
+	parsedURL, err := url.Parse(baseURL)
+	if err != nil {
+		return err
+	}
+
+	client := api.NewClient(parsedURL, http.DefaultClient)
+
+	f.RegisterClientURL(name, client, properties, parsedURL)
+	return nil
 }
 
 // RegisterURL adds a new Ollama to the Farm using the baseURL as the ID.
@@ -65,11 +110,7 @@ func (f *Farm) RegisterURL(baseURL string, properties *Properties) error {
 	if err != nil {
 		return err
 	}
-
-	client := api.NewClient(parsedURL, http.DefaultClient)
-
-	f.RegisterClient(parsedURL.String(), client, properties)
-	return nil
+	return f.RegisterNamedURL(parsedURL.String(), baseURL, properties)
 }
 
 // First returns the first Ollama that matches the given where.
@@ -120,7 +161,7 @@ func (f *Farm) matchesWhere(ollama *Ollama, where *Where) bool {
 	if where.Group != "" && ollama.properties.Group != where.Group {
 		return false
 	}
-	if where.Model != "" && !ollama.models[where.Model] {
+	if where.Model != "" && ollama.models[where.Model] == nil {
 		return false
 	}
 	if where.Offline != ollama.properties.Offline {

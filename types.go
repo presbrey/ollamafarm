@@ -2,6 +2,7 @@ package ollamafarm
 
 import (
 	"net/http"
+	"net/url"
 	"sync"
 	"time"
 
@@ -18,9 +19,12 @@ type Farm struct {
 
 // Ollama stores information about an Ollama server.
 type Ollama struct {
+	name string
+	url  *url.URL
+
 	client     *api.Client
 	farm       *Farm
-	models     map[string]bool
+	models     map[string]*api.ListModelResponse
 	properties Properties
 }
 
